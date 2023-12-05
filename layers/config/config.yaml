@@ -1,0 +1,15 @@
+apiVersion: kots.io/v1beta1
+kind: Config
+metadata:
+  name: config-sample
+spec:
+  groups:
+    - name: config_group
+      title: Application Configuration
+      description: Configuration for the application
+      items:
+        - name: trivial_config
+          title: Trivial Config
+          help_text: "A trivial config item"
+          type: bool
+          default: "0"
