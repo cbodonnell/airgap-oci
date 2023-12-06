@@ -104,6 +104,12 @@ oras pull localhost:5001/my-company/airgap-bundle:v1
 
 This will download the artifact to the current directory. The `bundle` directory will contain all of the files that make up the airgap bundle, including the `airgap.yaml` and `app.tar.gz` files, as well as the `images` directory containing the image registry data.
 
+For easier transport, the `bundle` directory can be tarred and gzipped:
+
+```bash
+tar -czvf airgap-bundle.tar.gz bundle
+```
+
 ### Checksums
 
 An OCI image has a manifest that contains a list of layers. Each layer has a digest that is a checksum of the layer's contents. The manifest also has a digest that is a checksum of the manifest's contents. The manifest digest is used to reference the image. OCI clients use these digests to verify the integrity of the image.
