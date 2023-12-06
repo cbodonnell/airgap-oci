@@ -2,9 +2,10 @@
 
 oras push \
   --artifact-type application/vnd.airgap.bundle \
-  localhost:5001/my-team/airgap-bundle:v1 \
+  localhost:5001/my-company/airgap-bundle:v1 \
   bundle/airgap.yaml:application/vnd.airgap.metadata+yaml \
   bundle/app.tar.gz:application/vnd.airgap.application.tar+gzip \
+  bundle/images/docker/registry/v2/repositories \
   bundle/images/docker/registry/v2/blobs/sha256/00/00b1321cfbe60dd95357571580754041c222e211713b98362e61268888edc8af/data \
   bundle/images/docker/registry/v2/blobs/sha256/0b/0b2e8f6789cee169d107e3b2702d97292acad6183302e98b2ced597ac61ab54b/data \
   bundle/images/docker/registry/v2/blobs/sha256/0d/0d99b1147531b112c35e970f183922adec5c00604049c77d887aeff9d81e6cb1/data \

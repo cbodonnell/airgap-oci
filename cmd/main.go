@@ -11,9 +11,10 @@ var scriptTemplate = `#!/bin/bash
 
 oras push \
   --artifact-type application/vnd.airgap.bundle \
-  localhost:5001/my-team/airgap-bundle:v1 \
+  localhost:5001/my-company/airgap-bundle:v1 \
   bundle/airgap.yaml:application/vnd.airgap.metadata+yaml \
   bundle/app.tar.gz:application/vnd.airgap.application.tar+gzip \
+  bundle/images/docker/registry/v2/repositories \
   %s
 `
 

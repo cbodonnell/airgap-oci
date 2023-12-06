@@ -10,16 +10,16 @@ storage-registry:
 onprem-registry:
 	docker run --rm -p 5002:5000 --name onprem-registry registry:2
 
-.PHONY: script
-script:
-	go run ./cmd/main.go > ./scripts/push.sh
-	chmod +x ./scripts/push.sh
-
-.PHONY: push
-push:
-	./scripts/push.sh
-
 .PHONY: copy-images
 copy-images:
 	skopeo copy --dest-tls-verify=false --preserve-digests --multi-arch all docker://docker.io/library/postgres:15.5-alpine docker://localhost:5000/postgres:15.5-alpine
 	skopeo copy --dest-tls-verify=false --preserve-digests --multi-arch all docker://docker.io/library/postgres:16.1-alpine docker://localhost:5000/postgres:16.1-alpine
+
+.PHONY: script
+script:
+	go run ./cmd/main.go > ./scripts/artifact.sh
+	chmod +x ./scripts/artifact.sh
+
+.PHONY: artifact
+artifact:
+	./scripts/artifact.sh
