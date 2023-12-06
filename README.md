@@ -48,7 +48,7 @@ At this point the `bundle/images` directory contains the image data for the airg
 
 ### Create an OCI artifact
 
-In this step we'll start up another registry on port 5001. In practice, this could be any registry where the airgap bundle will be stored, such as the Replicated Registry.
+In this step we'll start up another registry on port 5001. In practice, this could be any registry where airgap bundles will be stored.
 
 ```bash
 docker run -d -p 5001:5000 -v $(PWD)/bundle/images:/var/lib/registry --name storage-registry registry:2
@@ -102,7 +102,7 @@ To download an artifact, run:
 oras pull localhost:5001/my-company/airgap-bundle:v1
 ```
 
-This will download the artifact to the current directory. The artifact will be stored in the `bundle` directory. The `bundle` directory will contain all of the files that were uploaded to the artifact, including the `airgap.yaml` and `app.tar.gz` files, as well as the `images` directory containing the images that were copied to the local registry.
+This will download the artifact to the current directory. The `bundle` directory will contain all of the files that make up the airgap bundle, including the `airgap.yaml` and `app.tar.gz` files, as well as the `images` directory containing the image registry data.
 
 ### Checksums
 
