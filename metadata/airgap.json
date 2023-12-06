@@ -1,8 +1,0 @@
-{
-  "name": "my-application",
-  "version": "1.0.1",
-  "spec": {
-    "appSlug": "my-application",
-    "channelID": "abcdefg"
-  }
-}

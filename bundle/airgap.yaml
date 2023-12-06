@@ -1,0 +1,13 @@
+apiVersion: kots.io/v1beta1
+kind: Airgap
+spec:
+  appSlug: my-app
+  channelID: channel-id
+  channelName: channel-name
+  format: docker
+  savedImages:
+  - docker.io/library/postgres:15.5-alpine
+  - docker.io/library/postgres:16.1-alpine
+  signature: some-signature
+  updateCursor: "1"
+  versionLabel: 1.0.0

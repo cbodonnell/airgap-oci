@@ -1,8 +1,19 @@
-APP_SLUG ?= craig-helm
+.PHONY: bundle-registry
+bundle-registry:
+	docker run --rm -p 5000:5000 -v $(PWD)/bundle/images:/var/lib/registry --name bundle-registry registry:2
 
-.PHONY: registry
-registry:
-	docker run --rm -p 5000:5000 -v $(PWD)/layers/images:/var/lib/registry --name registry registry:2
+.PHONY: storage-registry
+storage-registry:
+	docker run --rm -p 5001:5000 --name storage-registry registry:2
+
+.PHONY: onprem-registry
+onprem-registry:
+	docker run --rm -p 5002:5000 --name onprem-registry registry:2
+
+.PHONY: script
+script:
+	go run ./cmd/main.go > ./scripts/push.sh
+	chmod +x ./scripts/push.sh
 
 .PHONY: push
 push:
@@ -10,11 +21,5 @@ push:
 
 .PHONY: copy-images
 copy-images:
-	rm -rf layers/images
-	mkdir -p layers/images
-	skopeo copy --dest-tls-verify=false --preserve-digests --multi-arch system docker://docker.io/library/postgres:15.5 docker://localhost:5000/postgres:15.5
-	skopeo copy --dest-tls-verify=false --preserve-digests --multi-arch system docker://docker.io/library/postgres:16.1 docker://localhost:5000/postgres:16.1
-
-.PHONY: push-postgres
-push-postgres:
-	skopeo copy --dest-tls-verify=false --preserve-digests --multi-arch system dir:layers/images/postgresql/16.1.0-debian-11-r15 docker://localhost:5000/some-namespace/postgresql:16.1.0-debian-11-r15
+	skopeo copy --dest-tls-verify=false --preserve-digests --multi-arch all docker://docker.io/library/postgres:15.5-alpine docker://localhost:5000/postgres:15.5-alpine
+	skopeo copy --dest-tls-verify=false --preserve-digests --multi-arch all docker://docker.io/library/postgres:16.1-alpine docker://localhost:5000/postgres:16.1-alpine
