@@ -19,7 +19,7 @@ Today, an airgap bundle consists of three main components:
 * `app.tar.gz` - application bundle (kubernetes manifests, helm charts, etc.)
 * `images` - directory containing a registry of images
 
-In this example, we will assume we already have the `airgap.yaml` and `app.tar.gz` files and we will use `skopeo` to copy the images from a remote registry to a temporary local registry to use for the bundle.
+In this example, we will assume we already have the `airgap.yaml` and `app.tar.gz` files and we will use `crane` to copy the images from a remote registry to a temporary local registry to use for the bundle.
 
 ### Create a local registry
 
