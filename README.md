@@ -44,7 +44,7 @@ Once the above commands complete successfully, we can stop the local registry:
 docker rm -f bundle-registry
 ```
 
-At this point the `bundle/images` directory contains the image data that for the airgap bundle.
+At this point the `bundle/images` directory contains the image data for the airgap bundle.
 
 ### Create an OCI artifact
 
