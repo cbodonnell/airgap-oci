@@ -17,7 +17,7 @@ copy-images:
 
 .PHONY: script
 script:
-	go run ./cmd/main.go > ./scripts/artifact.sh
+	go run ./cmd/script/main.go > ./scripts/artifact.sh
 	chmod +x ./scripts/artifact.sh
 
 .PHONY: artifact
