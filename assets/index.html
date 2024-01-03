@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Portal</title>
+</head>
+<body>
+    <h1>Customer Portal</h1>
+    <p>Click the button below to download the airgap bundle for v1 of my-application:</p>
+    
+    <div id="download"></div>
+    <div id="progress"></div>
+    <div id="checksum"></div>
+
+    <script>
+        // client-side identifier for the the download request
+        let uuid = crypto.randomUUID();
+
+        const download = document.getElementById('download');
+        const button = document.createElement('button');
+        button.innerHTML = 'Download Bundle';
+        button.onclick = function() {
+            window.location.href = '/download?uuid=' + uuid;
+
+            const progress = document.getElementById('progress');
+            const existingProgressText = document.getElementById('progress-text');
+            if (existingProgressText) {
+                existingProgressText.remove();
+            }
+            const progressText = document.createElement('p');
+            progressText.id = 'progress-text';
+            progressText.innerHTML = 'Progress: 0%';
+            progress.appendChild(progressText);
+
+            const progressInterval = setInterval(function() {
+                fetch('/progress?uuid=' + uuid)
+                    .then(response => {
+                        if (response.status == 200) {
+                            response.text().then(text => {
+                                progressText.innerHTML = 'Progress: ' + text + '%';
+                                if (text == '100') {
+                                    clearInterval(progressInterval);
+                                    return;
+                                }
+                            });
+                        }
+                    });
+            }, 1000);
+
+            const checksum = document.getElementById('checksum');
+            const existingChecksumText = document.getElementById('checksum-text');
+            if (existingChecksumText) {
+                existingChecksumText.remove();
+            }
+            const checksumText = document.createElement('p');
+            checksumText.id = 'checksum-text';
+            checksumText.innerHTML = 'Checksum: pending...';
+            checksum.appendChild(checksumText);
+
+            const checksumInterval = setInterval(function() {
+                fetch('/checksum?uuid=' + uuid)
+                    .then(response => {
+                        if (response.status == 200) {
+                            response.text().then(text => {
+                                checksumText.innerHTML = 'Checksum: ' + text;
+                                if (text != 'pending...') {
+                                    clearInterval(checksumInterval);
+                                    return;
+                                }
+                            });
+                        }
+                    });
+            }, 1000);
+
+        }
+        download.appendChild(button);
+
+    </script>
+</body>
+</html>
